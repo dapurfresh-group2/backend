@@ -1,6 +1,17 @@
 const express = require('express')
+const db = require('./config/index')
 const app = express()
 const port = 3000
+const { Product } = require('./models/product');
+const { Category } = require('./models/category');
+
+try {
+  db.authenticate().then(() => {
+    console.log('Database Connected.');
+  })
+} catch (error) {
+  console.log(error);
+}
 
 const hello = require('./routes/hello')
 
