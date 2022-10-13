@@ -26,8 +26,8 @@ exports.updateProfile = async (req, res) => {
             res.status(400).json({ message: "username not registered" })
             return
         }
-        const {name, phone, address} = req.body
-        const updatedProfile = await profileRepository.updateUser(dataId.id, name, phone, address)
+        const {name, phone, address, image, picture} = req.body
+        const updatedProfile = await profileRepository.updateUser(dataId.id, name, phone, address, image, picture)
         
         res.status(200).json({ message: "success",data: updatedProfile })
     } catch (error) {
