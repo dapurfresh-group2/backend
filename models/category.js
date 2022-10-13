@@ -12,6 +12,4 @@ const Category = db.define('categories', {
   }
 });
 
-Category.sync();
-
 module.exports = Category;

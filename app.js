@@ -2,6 +2,8 @@ const express = require('express')
 const db = require('./config/index')
 const app = express()
 const port = 3000
+const Product = require('./models/product')
+const Category = require('./models/category')
 
 try {
   db.authenticate().then(() => {
@@ -17,6 +19,8 @@ app.use(express.json())
 
 app.use('/api/v1/hello', hello)
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`app listening on port ${port}`)
+  await Product.sync({ alter: true })
+  await Category.sync({ alter: true })
 })

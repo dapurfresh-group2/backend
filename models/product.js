@@ -1,14 +1,12 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/index');
+const Category = require('./category')
 
 const Product = db.define('products', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
-  },
-  categoryId: {
-    type: DataTypes.INTEGER
   },
   name: {
     type: DataTypes.STRING
@@ -21,6 +19,7 @@ const Product = db.define('products', {
   }
 });
 
-Product.sync();
+Category.hasMany(Product)
+Product.belongsTo(Category)
 
 module.exports = Product;
