@@ -1,10 +1,8 @@
 const User = require('../models/user')
 
-exports.getUserByName = async(username) => {
+exports.getUser = async(data) => {
     const user = await User.findOne({
-        where: {
-            username: username
-        }
+        where: data
     })
 
     if (user) {

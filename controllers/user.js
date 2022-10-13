@@ -5,8 +5,10 @@ require('dotenv').config()
 
 exports.register = async (req, res) => {
     try {
-        const user = await userRepository.getUserByName(req.body.username)
-        const phone = await userRepository.getUserByPhone(toString(req.body.phone))
+        const dataUser = {username : req.body.username}
+        const dataPhone = {phone : toString(req.body.phone)}
+        const user = await userRepository.getUser(dataUser)
+        const phone = await userRepository.getUser(dataPhone)
         if (user !== null) {
             res.status(400).json({ message: "failed username has been used" })
             return
@@ -25,7 +27,8 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        const user = await userRepository.getUserByName(req.body.username)
+        const username = {username : req.body.username}
+        const user = await userRepository.getUser(username)
         if (user === null) {
             res.status(400).json({ message: "failed username not registered" })
             return
@@ -45,28 +48,4 @@ exports.login = async (req, res) => {
     }
 }
 
-exports.verificationOTP = async (req, res) => {
-    const phone = req.body.phone
-    const otp = parseInt(req.body.otp)
 
-    try {
-        const user = await userRepository.getUser(phone)
-        if (user === null) {
-            res.status(400).json({ message: "failed phone number not registered" })
-            return
-        }
-
-        if (user.otp !== otp) {
-            res.status(400).json({ message: "failed otp does not match" })
-            return
-        }
-
-        const token = jwt.sign({
-            data: user
-        }, `${process.env.SECRET_KEY}`, { expiresIn: '7d' })
-
-        res.status(200).json({ message: "success verification otp match", token: token})
-    } catch (error) {
-        res.status(400).json({ message: `failed ${error.message}` })  
-    }
-}
