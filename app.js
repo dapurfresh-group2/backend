@@ -15,11 +15,13 @@ try {
 
 const hello = require('./routes/hello')
 const categories = require('./routes/category')
+const products = require('./routes/product')
 
 app.use(express.json())
 
 app.use('/api/v1/hello', hello)
 app.use('/api/v1/categories', categories)
+app.use('/api/v1/products', products)
 
 app.listen(port, async () => {
   console.log(`app listening on port ${port}`)
