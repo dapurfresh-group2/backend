@@ -14,13 +14,15 @@ try {
 }
 
 const hello = require('./routes/hello')
+const categories = require('./routes/category')
 
 app.use(express.json())
 
 app.use('/api/v1/hello', hello)
+app.use('/api/v1/categories', categories)
 
 app.listen(port, async () => {
   console.log(`app listening on port ${port}`)
-  await Product.sync({ alter: true })
   await Category.sync({ alter: true })
+  await Product.sync({ alter: true })
 })
