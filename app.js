@@ -5,14 +5,14 @@ const port = 3000
 const hello = require('./routes/hello')
 const user = require('./routes/user')
 const profile = require('./routes/profile')
-const Store = require('./models/user')
+const User = require('./models/user')
 
 app.use(express.json())
 
-app.use('/api/auth', user)
-app.use('/api/profile', profile)
+app.use('/api/v1/auth', user)
+app.use('/api/v1/profile', profile)
 
-app.listen(port, () => {
+app.listen(port, async() => {
   console.log(`app listening on port ${port}`)
-  Store.sync({alter: true})
+  await User.sync({alter: true})
 })
