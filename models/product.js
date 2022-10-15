@@ -11,6 +11,15 @@ const Product = db.define('products', {
   },
   Price: {
     type: DataTypes.STRING
+  },
+  image: {
+    type: DataTypes.STRING
+  },
+  weight: {
+    type: DataTypes.STRING
+  },
+  info: {
+    type: DataTypes.STRING
   }
 });
 
