@@ -2,6 +2,7 @@ const express = require('express')
 const db = require('./config/index')
 const app = express()
 const port = 3000
+const path = require('path')
 const Product = require('./models/product')
 const Category = require('./models/category')
 
@@ -12,6 +13,8 @@ try {
 } catch (error) {
   console.log(error);
 }
+
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 const hello = require('./routes/hello')
 const categories = require('./routes/category')
