@@ -11,7 +11,6 @@ exports.updateUser = async (id, name, phone, address, image, picture) => {
     user.phone = phone
     user.address = address
     user.image = image
-    user.picture = picture
 
     user.save()
 
