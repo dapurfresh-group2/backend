@@ -5,6 +5,7 @@ const port = 3000
 const path = require('path')
 const Product = require('./models/product')
 const Category = require('./models/category')
+const cors = require('cors')
 
 try {
   db.authenticate().then(() => {
@@ -14,6 +15,7 @@ try {
   console.log(error);
 }
 
+app.use(cors())
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
 const hello = require('./routes/hello')
