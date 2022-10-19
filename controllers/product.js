@@ -20,8 +20,12 @@ exports.searchProduct = async (req, res) => {
                 filtered_products.push(products[i])
             }
         }
-        res.status(200).json({ message: "success", data: filtered_products });
+        if (Object.keys(filtered_products).length > 0) {
+            res.status(200).json({ message: "success", data: filtered_products });
+        } else {
+            res.status(404).json({ message: "product not found" });
+        }
     } catch (error) {
-        res.status(404).json({ message: "product not found" });
+        res.status(400).json({ message: `failed ${error.message}` });
     };
 };
