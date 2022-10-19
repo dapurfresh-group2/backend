@@ -27,8 +27,7 @@ exports.getUserByPhone = async (phone) => {
 }
 
 exports.createUser = async (req) => {
-    const user = await User.create(req)
-    return user
+    await User.create(req)
 }
 
 exports.updateOTP = async (user, newOTP) => {

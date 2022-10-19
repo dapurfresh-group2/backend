@@ -18,8 +18,8 @@ exports.register = async (req, res) => {
             return
         }
         req.body.password = bcrypt.hashSync(req.body.password, 10); 
-        const newUser = await userRepository.createUser(req.body)
-        res.status(200).json({ message: "register success", data: newUser })
+        await userRepository.createUser(req.body)
+        res.status(200).json({ message: "register success" })
     } catch (error) {
         res.status(400).json({ message: `failed ${error.message}` })
     }
@@ -30,19 +30,18 @@ exports.login = async (req, res) => {
         const username = {username : req.body.username}
         const user = await userRepository.getUser(username)
         if (user === null) {
-            res.status(400).json({ message: "failed username not registered" })
+            res.status(400).json({ message: "failed, username not registered" })
             return
         }
         let hash = bcrypt.compareSync(req.body.password, user.password);
         if (!hash) {
             res.send("incorrect password");
-        }
-        
+        }    
         const token = jwt.sign({
             data: user
         }, `${process.env.SECRET_KEY}`, { expiresIn: '7d' })
 
-        res.status(200).json({ message: "success",data: user, token: token })
+        res.status(200).json({ message: "success", token: token })
     } catch (error) {
         res.status(400).json({ message: `failed ${error.message}` })
     }
