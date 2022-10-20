@@ -3,7 +3,7 @@ const router = express.Router()
 const profileController = require('../controllers/profile')
 const middleware = require('../middleware')
 
-router.post('/user', middleware.checkAuthorization , profileController.getProfile)
+router.get('/user', middleware.checkAuthorization , profileController.getProfile)
 router.put('/edit', middleware.checkAuthorization , profileController.updateProfile)
 
 module.exports = router
