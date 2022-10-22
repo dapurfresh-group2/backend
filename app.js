@@ -6,6 +6,7 @@ const path = require('path')
 const Product = require('./models/product')
 const Category = require('./models/category')
 const Cart = require('./models/cart')
+const CartItem = require('./models/cart-item')
 const cors = require('cors')
 
 try {
@@ -41,4 +42,5 @@ app.listen(port, async () => {
   await Product.sync({ alter: true })
   await User.sync({alter: true})
   await Cart.sync({ alter: true })
+  await CartItem.sync({ alter: true })
 })
