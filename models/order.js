@@ -23,13 +23,13 @@ const Order = sequelize.define('order', {
         type: DataTypes.DATE
     },
     total_product_price: {
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     },
     shipping_price: {
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     },
     total_price: {
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     }
 })
 

@@ -8,7 +8,7 @@ const CartItem = sequelize.define('cart_items', {
         type: DataTypes.INTEGER
     },
     total_price: {
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     }
 })
 
