@@ -3,7 +3,7 @@ const sequelize = require('../config')
 const User = require('./user')
 
 const Cart = sequelize.define('cart', {
-    staus: {
+    status: {
         type: DataTypes.BOOLEAN
     }
 })
