@@ -8,6 +8,7 @@ const Category = require('./models/category')
 const Cart = require('./models/cart')
 const CartItem = require('./models/cart-item')
 const Order = require('./models/order')
+const User = require('./models/user')
 const cors = require('cors')
 
 try {
@@ -27,7 +28,7 @@ const categories = require('./routes/category')
 const products = require('./routes/product')
 const user = require('./routes/user')
 const profile = require('./routes/profile')
-const User = require('./models/user')
+const cart = require('./routes/cart')
 
 app.use(express.json())
 
@@ -36,6 +37,7 @@ app.use('/api/v1/categories', categories)
 app.use('/api/v1/products', products)
 app.use('/api/v1/auth', user)
 app.use('/api/v1/profile', profile)
+app.use('/api/v1/cart', cart)
 
 app.listen(port, async () => {
   console.log(`app listening on port ${port}`)
