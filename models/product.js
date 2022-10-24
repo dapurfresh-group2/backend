@@ -9,7 +9,7 @@ const Product = db.define('products', {
   quantity: {
     type: DataTypes.INTEGER
   },
-  Price: {
+  price: {
     type: DataTypes.STRING
   },
   image: {
