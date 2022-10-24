@@ -4,7 +4,8 @@ const User = require('./user')
 
 const Cart = sequelize.define('cart', {
     status: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     }
 })
 
