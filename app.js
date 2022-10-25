@@ -6,6 +6,10 @@ const path = require('path')
 const Product = require('./models/product')
 const Category = require('./models/category')
 const cors = require('cors')
+const swaggerUI = require('swagger-ui-express')
+const swaggerDocumentation = require('./helper/documentation')
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocumentation))
 
 try {
   db.authenticate().then(() => {
