@@ -2,6 +2,14 @@ const productRepository = require('../repository/product')
 
 exports.getAllProduct = async (req, res) => {
     try {
+        if (req.query.categoryId) {
+            const products = await productRepository.getAllProductByCategory(req.query.categoryId)
+
+            res.status(200).json({ message: "success", data: products })
+            
+            return
+        }
+
         const products = await productRepository.getAllProduct()
 
         res.status(200).json({ message: "success", data: products })
