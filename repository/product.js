@@ -6,3 +6,13 @@ exports.getAllProduct = async () => {
 
     return products
 }
+
+exports.getAllProductByCategory = async (categoryID) => {
+    const products = await Product.findAll({
+        where: {
+            categoryId: categoryID
+        }
+    })
+
+    return products
+}
