@@ -23,8 +23,6 @@ exports.addProduct = async (req, res) => {
             res.status(200).json({ message: 'success', data: newCartItem })
             return
         } else {
-            console.log("cart active")
-
             newCartItem = await cartRepository.addCartItem(productId, cartActive.id, quantity, totalPrice)
 
             res.status(200).json({ message: 'success', data: newCartItem })
