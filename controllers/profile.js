@@ -9,13 +9,11 @@ exports.getProfile = async (req, res) => {
         const dataId = {id : req.user.id}
         const user = await userRepository.getUser(dataId)
         if (user === null){
-          res.status(400).json({ message: "username not registered" })
-            // sama juga terkait return
-            return
+            return res.status(400).json({ message: "username not registered" })
         }
-        res.status(200).json({ message: "success", data: user })
+        return res.status(200).json({ message: "success", data: user })
     } catch (error) {
-        res.status(400).json({ message: `failed ${error.message}` })
+        return res.status(400).json({ message: `failed ${error.message}` })
     }
 }
 
@@ -24,15 +22,14 @@ exports.updateProfile = async (req, res) => {
         const dataId = {id : req.user.id}
         const user = await userRepository.getUser(dataId)
         if (user === null) {
-            res.status(400).json({ message: "username not registered" })
-            return
+            return res.status(400).json({ message: "username not registered" })
         }
         const {name, phone, address, image} = req.body
         const updatedProfile = await profileRepository.updateUser(dataId.id, name, phone, address, image)
         
-        res.status(200).json({ message: "success",data: updatedProfile })
+        return res.status(200).json({ message: "success",data: updatedProfile })
     } catch (error) {
-        res.status(400).json({ message: `failed ${error.message}` })
+        return res.status(400).json({ message: `failed ${error.message}` })
     }
 }
 
