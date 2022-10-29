@@ -10,18 +10,16 @@ exports.register = async (req, res) => {
         const user = await userRepository.getUser(dataUser)
         const phone = await userRepository.getUser(dataPhone)
         if (user !== null) {
-            res.status(400).json({ message: "failed username has been used" })
-            return
+            return res.status(400).json({ message: "failed username has been used" })
         }
         if (phone !== null) {
-            res.status(400).json({ message: "failed phone has been used" })
-            return
+            return res.status(400).json({ message: "failed phone has been used" })
         }
         req.body.password = bcrypt.hashSync(req.body.password, 10); 
         await userRepository.createUser(req.body)
-        res.status(200).json({ message: "register success" })
+        return res.status(200).json({ message: "register success" })
     } catch (error) {
-        res.status(400).json({ message: `failed ${error.message}` })
+        return res.status(400).json({ message: `failed ${error.message}` })
     }
 }
 
@@ -30,20 +28,19 @@ exports.login = async (req, res) => {
         const username = {username : req.body.username}
         const user = await userRepository.getUser(username)
         if (user === null) {
-            res.status(400).json({ message: "failed, username not registered" })
-            return
+            return res.status(400).json({ message: "failed, username not registered" })
         }
         let hash = bcrypt.compareSync(req.body.password, user.password);
         if (!hash) {
-            res.send("incorrect password");
+            return res.send("incorrect password");
         }    
         const token = jwt.sign({
             data: user
         }, `${process.env.SECRET_KEY}`, { expiresIn: '7d' })
 
-        res.status(200).json({ message: "success", token: token })
+        return res.status(200).json({ message: "success", token: token })
     } catch (error) {
-        res.status(400).json({ message: `failed ${error.message}` })
+        return res.status(400).json({ message: `failed ${error.message}` })
     }
 }
 
