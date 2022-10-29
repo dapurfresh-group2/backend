@@ -3,6 +3,11 @@ const { productDoc } = require("./product.docs");
 const { profileDoc } = require("./profile.docs");
 const { userDoc } = require("./user.docs");
 
+// Better dokumentasi disimpan di folder docs sendiri,
+// bukan di helper karena helper itu tujuannya
+// untuk membuat fungsi-fungsi bantuan
+// bukan dokumentasi
+
 const swaggerDocumentation = {
   openapi: "3.0.0",
   info: {

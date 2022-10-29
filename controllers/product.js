@@ -7,11 +7,14 @@ exports.getAllProduct = async (req, res) => {
 
             res.status(200).json({ message: "success", data: products })
             
+            // Ini mending langsung return res.status... 
             return
         }
 
         const products = await productRepository.getAllProduct()
 
+        // Jadi setiap fungsi gini better nya dikasih return.
+        // Yang lain juga sama
         res.status(200).json({ message: "success", data: products })
     } catch (error) {
         res.status(400).json({ message: `failed ${error.message}` })

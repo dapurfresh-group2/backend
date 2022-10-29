@@ -22,6 +22,7 @@ try {
 app.use(cors())
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
+// Yang require seperti ini better diletakan di paling atas
 const hello = require('./routes/hello')
 
 const categories = require('./routes/category')

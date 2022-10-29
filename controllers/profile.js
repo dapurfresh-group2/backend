@@ -9,7 +9,8 @@ exports.getProfile = async (req, res) => {
         const dataId = {id : req.user.id}
         const user = await userRepository.getUser(dataId)
         if (user === null){
-            res.status(400).json({ message: "username not registered" })
+          res.status(400).json({ message: "username not registered" })
+            // sama juga terkait return
             return
         }
         res.status(200).json({ message: "success", data: user })
