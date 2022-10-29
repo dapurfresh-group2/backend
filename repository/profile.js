@@ -1,6 +1,6 @@
 const User = require('../models/user')
 
-exports.updateUser = async (id, name, phone, address, image, picture) => {
+exports.updateUser = async (id, name, phone, address, image) => {
     const user = await User.findOne({
         where: {
             id: id
@@ -10,8 +10,9 @@ exports.updateUser = async (id, name, phone, address, image, picture) => {
     user.name = name
     user.phone = phone
     user.address = address
-    user.image = image
-
+    if (image) {
+        user.image = image
+    }
     user.save()
 
     return user
