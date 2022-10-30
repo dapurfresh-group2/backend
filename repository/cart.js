@@ -1,10 +1,11 @@
 const Cart = require('../models/cart')
 const CartItem = require('../models/cart-item')
 
-exports.findCartActive = async () => {
+exports.findCartActive = async (userID) => {
     const cartActive = await Cart.findOne({
         where: {
-            status: true
+            status: true,
+            UserId: userID
         }
     })
 
@@ -87,10 +88,11 @@ exports.updateCartItem = async (productID, quantity, totalPrice) => {
     return cartItem
 }
 
-exports.deleteCartItem = async (productID) => {
+exports.deleteCartItem = async (productID, cartID) => {
     await CartItem.destroy({
         where: {
-            productId: productID
+            productId: productID,
+            cartId: cartID
         }
     })
 

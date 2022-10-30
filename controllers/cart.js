@@ -12,10 +12,9 @@ exports.postProduct = async (req, res) => {
             return res.status(404).json({ message: 'failed product not found' })
         }
 
-        if (quantity === 0) {
-            await cartRepository.deleteCartItem(productId)
-
-            const cartActive = await cartRepository.findCartActive()
+        if (quantity === 0) {            
+            const cartActive = await cartRepository.findCartActive(req.user.id)
+            await cartRepository.deleteCartItem(productId, cartActive.id)
             const checkCartItem = await cartRepository.checkCartItemByCartID(cartActive.id)
             if (!checkCartItem) {
                 await cartRepository.changeCartStatus(cartActive.id, false)
@@ -26,7 +25,7 @@ exports.postProduct = async (req, res) => {
 
         const totalPrice = quantity * product.price
         
-        const cartActive = await cartRepository.findCartActive()
+        const cartActive = await cartRepository.findCartActive(req.user.id)
 
         if (!cartActive) {
             const newCart = await cartRepository.createCart(req.user.id)
@@ -46,6 +45,19 @@ exports.postProduct = async (req, res) => {
 
             return res.status(200).json({ message: 'success', data: newCartItem })
         }
+    } catch (error) {
+        return res.status(400).json({ message: `failed ${error.message}`})
+    }
+}
+
+exports.getCartActive = async (req, res) => {
+    try {
+        const cartActive = await cartRepository.findCartActive(req.user.id)
+        if (!cartActive) {
+            return res.status(404).json({ message: 'cart active not found' })
+        }
+
+        return res.status(200).json({ message: "success", data: cartActive })
     } catch (error) {
         return res.status(400).json({ message: `failed ${error.message}`})
     }
