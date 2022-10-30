@@ -8,6 +8,7 @@ const Category = require('./models/category')
 const cors = require('cors')
 const swaggerUI = require('swagger-ui-express')
 const swaggerDocumentation = require('./helper/documentation')
+const upload = require('express-fileupload')
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocumentation))
 
@@ -19,6 +20,7 @@ try {
   console.log(error);
 }
 
+app.use(upload())
 app.use(cors())
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
