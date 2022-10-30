@@ -7,6 +7,7 @@ exports.getAllProduct = async () => {
     return products
 }
 
+
 exports.getProductByID = async (id) => {
     const product = await Product.findOne({
         where: {
@@ -15,4 +16,14 @@ exports.getProductByID = async (id) => {
     })
 
     return product
+
+exports.getAllProductByCategory = async (categoryID) => {
+    const products = await Product.findAll({
+        where: {
+            categoryId: categoryID
+        }
+    })
+
+    return products
+
 }

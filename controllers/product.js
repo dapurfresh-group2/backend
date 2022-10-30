@@ -2,11 +2,15 @@ const productRepository = require('../repository/product')
 
 exports.getAllProduct = async (req, res) => {
     try {
-        const products = await productRepository.getAllProduct()
+        if (req.query.categoryId) {
+            const products = await productRepository.getAllProductByCategory(req.query.categoryId)
+            return res.status(200).json({ message: "success", data: products })
+        }
 
-        res.status(200).json({ message: "success", data: products })
+        const products = await productRepository.getAllProduct()
+        return res.status(200).json({ message: "success", data: products })
     } catch (error) {
-        res.status(400).json({ message: `failed ${error.message}` })
+        return res.status(400).json({ message: `failed ${error.message}` })
     }
 }
 
@@ -21,11 +25,11 @@ exports.searchProduct = async (req, res) => {
             }
         }
         if (Object.keys(filtered_products).length > 0) {
-            res.status(200).json({ message: "success", data: filtered_products });
+            return res.status(200).json({ message: "success", data: filtered_products });
         } else {
-            res.status(404).json({ message: "product not found" });
+            return res.status(404).json({ message: "product not found" });
         }
     } catch (error) {
-        res.status(400).json({ message: `failed ${error.message}` });
+        return res.status(400).json({ message: `failed ${error.message}` });
     };
 };

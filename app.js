@@ -10,6 +10,11 @@ const CartItem = require('./models/cart-item')
 const Order = require('./models/order')
 const User = require('./models/user')
 const cors = require('cors')
+const swaggerUI = require('swagger-ui-express')
+const swaggerDocumentation = require('./helper/documentation')
+const upload = require('express-fileupload')
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocumentation))
 
 try {
   db.authenticate().then(() => {
@@ -19,9 +24,11 @@ try {
   console.log(error);
 }
 
+app.use(upload())
 app.use(cors())
 app.use('/static', express.static(path.join(__dirname, 'public')))
 
+// Yang require seperti ini better diletakan di paling atas
 const hello = require('./routes/hello')
 
 const categories = require('./routes/category')
