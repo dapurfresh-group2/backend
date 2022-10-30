@@ -16,6 +16,7 @@ exports.getProductByID = async (id) => {
     })
 
     return product
+}
 
 exports.getAllProductByCategory = async (categoryID) => {
     const products = await Product.findAll({
