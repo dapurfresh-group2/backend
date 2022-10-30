@@ -3,6 +3,6 @@ const router = express.Router()
 const cartController = require('../controllers/cart')
 const middleware = require('../middleware')
 
-router.post('/add-product/:id', middleware.checkAuthorization, cartController.addProduct)
+router.post('/post-product/:id', middleware.checkAuthorization, cartController.postProduct)
 
 module.exports = router

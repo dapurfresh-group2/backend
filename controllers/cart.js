@@ -1,14 +1,27 @@
 const cartRepository = require('../repository/cart')
 const productRepository = require('../repository/product')
 
-exports.addProduct = async (req, res) => {
+exports.postProduct = async (req, res) => {
     const productId = req.params.id
-    const quantity = req.body.quantity
+    const quantityBody = req.body.quantity
+    const quantity = parseInt(quantityBody)
 
     try {
         const product = await productRepository.getProductByID(productId)
         if (!product) {
-            res.status(404).json({ message: 'failed product not found' })
+            return res.status(404).json({ message: 'failed product not found' })
+        }
+
+        if (quantity === 0) {
+            await cartRepository.deleteCartItem(productId)
+
+            const cartActive = await cartRepository.findCartActive()
+            const checkCartItem = await cartRepository.checkCartItemByCartID(cartActive.id)
+            if (!checkCartItem) {
+                await cartRepository.changeCartStatus(cartActive.id, false)
+            }
+
+            return res.status(200).json({ message: "success deleted cart item" })
         }
 
         const totalPrice = quantity * product.price
@@ -16,19 +29,24 @@ exports.addProduct = async (req, res) => {
         const cartActive = await cartRepository.findCartActive()
 
         if (!cartActive) {
-            newCart = await cartRepository.createCart(req.user.id)
+            const newCart = await cartRepository.createCart(req.user.id)
 
-            newCartItem = await cartRepository.addCartItem(productId, newCart.id, quantity, totalPrice)
+            const newCartItem = await cartRepository.addCartItem(productId, newCart.id, quantity, totalPrice)
 
-            res.status(200).json({ message: 'success', data: newCartItem })
-            return
+            return res.status(200).json({ message: 'success', data: newCartItem })
         } else {
-            newCartItem = await cartRepository.addCartItem(productId, cartActive.id, quantity, totalPrice)
+            const checkCartItem = await cartRepository.checkCartItemByProductID(productId)
+            if (checkCartItem) {
+                const updatedCartItem = await cartRepository.updateCartItem(productId, quantity, totalPrice)
+    
+                return res.status(200).json({ message: 'success', data: updatedCartItem })
+            }
 
-            res.status(200).json({ message: 'success', data: newCartItem })
-            return
+            const newCartItem = await cartRepository.addCartItem(productId, cartActive.id, quantity, totalPrice)
+
+            return res.status(200).json({ message: 'success', data: newCartItem })
         }
     } catch (error) {
-        res.status(400).json({ message: `failed ${error.message}`})
+        return res.status(400).json({ message: `failed ${error.message}`})
     }
 }
