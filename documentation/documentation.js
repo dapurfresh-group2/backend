@@ -1,3 +1,4 @@
+const { cartDoc } = require("./cart.docs");
 const { categoryDoc } = require("./category.docs");
 const { productDoc } = require("./product.docs");
 const { profileDoc } = require("./profile.docs");
@@ -29,6 +30,10 @@ const swaggerDocumentation = {
   },
   tags: [
     {
+      name: "User",
+      description: "Register and login"
+    },
+    {
       name: "Product",
       description: "Show products",
     },
@@ -37,15 +42,16 @@ const swaggerDocumentation = {
       description: "Sort products by category"
     },
     {
-      name: "User",
-      description: "Register and login"
+      name: "Cart",
+      description: "All about cart"
     }
   ],
   paths: {
     ...productDoc,
     ...categoryDoc,
     ...userDoc,
-    ...profileDoc
+    ...profileDoc,
+    ...cartDoc
   }
 }
 

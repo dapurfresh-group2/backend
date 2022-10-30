@@ -46,7 +46,7 @@ const editProfile = {
   description: "This api is used to edit information of the user",
   requestBody: {
     content: {
-      "application/json": {
+      "multipart/form-data": {
         schema: {
           type: "object",
           properties: {
@@ -65,10 +65,10 @@ const editProfile = {
               description: "New address of the user",
               example: "Gang 3D no 7 Keputih"
             },
-            image: {
+            file: {
               type: "string",
-              description: "New image for the user",
-              example: "/path/to/the/image/file"
+              format: "binary",
+              description: "New image for the user"
             }
           }
         }
