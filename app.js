@@ -11,7 +11,7 @@ const Order = require('./models/order')
 const User = require('./models/user')
 const cors = require('cors')
 const swaggerUI = require('swagger-ui-express')
-const swaggerDocumentation = require('./helper/documentation')
+const swaggerDocumentation = require('./documentation/documentation')
 const upload = require('express-fileupload')
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocumentation))
