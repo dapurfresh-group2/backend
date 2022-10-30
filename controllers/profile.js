@@ -24,10 +24,18 @@ exports.updateProfile = async (req, res) => {
         if (user === null) {
             return res.status(400).json({ message: "username not registered" })
         }
-        const {name, phone, address, image} = req.body
-        const updatedProfile = await profileRepository.updateUser(dataId.id, name, phone, address, image)
-        
-        return res.status(200).json({ message: "success",data: updatedProfile })
+        const {name, phone, address} = req.body
+        if (!req.files) {
+            const updatedProfile = await profileRepository.updateUser(dataId.id, name, phone, address)
+            return res.status(200).json({ message: "success",data: updatedProfile })
+        } 
+        else {
+            const file = req.files.file
+            const path = `/images/profile/${req.user.username}.jpg`
+            file.mv("./public" + path)
+            const updatedProfile = await profileRepository.updateUser(dataId.id, name, phone, address, "/static" + path)
+            return res.status(200).json({ message: "success",data: updatedProfile })
+        }
     } catch (error) {
         return res.status(400).json({ message: `failed ${error.message}` })
     }
