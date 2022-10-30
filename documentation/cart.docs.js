@@ -61,8 +61,57 @@ const addToCart = {
   }
 }
 
+const getCartActive = {
+  tags : [ "Cart" ],
+  security: [
+    {
+      bearerAuth: []
+    }
+  ],
+  summary: "Show active cart",
+  description: "This api is used to show whether cart is active or not",
+  responses: {
+    "200": {
+      description: "success",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            example: {
+              "id": 17,
+              "status": true,
+              "createdAt": "2022-10-30T08:49:33.899Z",
+              "updatedAt": "2022-10-30T08:49:33.899Z",
+              "UserId": 1
+            }
+          }
+        }
+      }
+    },
+    "404": {
+      description: "not found",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            example: {
+              "message": "cart active not found"
+            }
+          }
+        }
+      }
+    },
+    "400": {
+      description: "bad request"
+    }
+  }
+}
+
 exports.cartDoc = {
   "/api/v1/cart/post-product/{id}": {
     post: addToCart
+  },
+  "/api/v1/cart": {
+    get: getCartActive
   }
 }
