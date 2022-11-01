@@ -17,10 +17,8 @@ const Order = sequelize.define('order', {
         type: DataTypes.STRING
     },
     status: {
-        type: DataTypes.BOOLEAN
-    },
-    Date: {
-        type: DataTypes.DATE
+        type: DataTypes.STRING,
+        defaultValue: "Proses"
     },
     total_product_price: {
         type: DataTypes.STRING
