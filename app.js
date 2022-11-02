@@ -36,6 +36,7 @@ const products = require('./routes/product')
 const user = require('./routes/user')
 const profile = require('./routes/profile')
 const cart = require('./routes/cart')
+const order = require('./routes/order')
 
 app.use(express.json())
 
@@ -45,6 +46,7 @@ app.use('/api/v1/products', products)
 app.use('/api/v1/auth', user)
 app.use('/api/v1/profile', profile)
 app.use('/api/v1/cart', cart)
+app.use('/api/v1/order', order)
 
 app.listen(port, async () => {
   console.log(`app listening on port ${port}`)
