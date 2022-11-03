@@ -1,14 +1,24 @@
 const Cart = require('../models/cart')
 const CartItem = require('../models/cart-item')
+const Product = require('../models/product')
 
 exports.findCartActive = async (userID) => {
     const cartActive = await Cart.findOne({
         where: {
             status: true,
             UserId: userID
+        },
+        include: {
+            model: CartItem,
+            attributes: ["productId", "quantity", "total_price"],
+            required: false,
+            include: {
+                model: Product,
+                attributes: ["name"],
+                required: false
+            }
         }
     })
-
     return cartActive
 }
 
@@ -26,10 +36,11 @@ exports.checkCartItemByCartID = async (cartID) => {
     }
 }
 
-exports.checkCartItemByProductID = async (productID) => {
+exports.checkCartItemByProductID = async (productID, cartID) => {
     const cartItem = await CartItem.findOne({
         where: {
-            productId: productID
+            productId: productID,
+            cartId: cartID
         }
     })
 
