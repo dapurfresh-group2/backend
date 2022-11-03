@@ -1,4 +1,8 @@
 const Order = require('../models/order')
+const Cart = require('../models/cart')
+const CartItem = require('../models/cart-item')
+const { Sequelize, Op } = require('sequelize')
+const moment = require('moment')
 
 exports.createOrder = async (
         userID, 
@@ -24,4 +28,32 @@ exports.createOrder = async (
     })
 
     return newOrder
+}
+
+exports.getHistory = async (
+    userID, 
+) => {
+    console.log(userID)
+    const History = await Order.findAll({
+        where: {
+            UserId: userID,
+            createdAt: {
+                [Op.lt] :new Date(),
+                [Op.gt] : new Date(new Date() - 7 * 24 * 60 *60 * 1000)
+            }
+        },
+        include : [
+            {
+                model : Cart,
+                include : [
+                    {
+                        model : CartItem
+                    }
+                ],
+            }
+        ],
+
+})
+
+return History
 }

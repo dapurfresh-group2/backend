@@ -33,3 +33,14 @@ exports.checkout = async (req, res) => {
         return res.status(400).json({ message: `failed ${error.message}` });
     }
 }
+
+exports.history = async (req, res) => {
+    console.log(req.user)
+    try {
+        const dataId = req.user.id
+        const history = await orderRepository.getHistory(dataId)
+        return res.status(200).json({ message: "success", data: history })
+    } catch (error) {
+        return res.status(400).json({ message: `failed ${error.message}` });
+    }
+}
