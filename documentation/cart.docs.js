@@ -78,11 +78,22 @@ const getCartActive = {
           schema: {
             type: "object",
             example: {
-              "id": 17,
+              "id": 28,
               "status": true,
-              "createdAt": "2022-10-30T08:49:33.899Z",
-              "updatedAt": "2022-10-30T08:49:33.899Z",
-              "UserId": 1
+              "createdAt": "2022-11-03T09:55:55.950Z",
+              "updatedAt": "2022-11-03T09:55:55.950Z",
+              "UserId": 1,
+              "cart_items": [
+                {
+                  "productId": 9,
+                  "quantity": 3,
+                  "total_price": "24000",
+                  "product": {
+                    "name": "Kentang"
+                  }
+                }
+              ],
+              "final_price": 24000
             }
           }
         }
