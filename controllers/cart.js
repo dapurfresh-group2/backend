@@ -34,7 +34,7 @@ exports.postProduct = async (req, res) => {
 
             return res.status(200).json({ message: 'success', data: newCartItem })
         } else {
-            const checkCartItem = await cartRepository.checkCartItemByProductID(productId)
+            const checkCartItem = await cartRepository.checkCartItemByProductID(productId, cartActive.id)
             if (checkCartItem) {
                 const updatedCartItem = await cartRepository.updateCartItem(productId, quantity, totalPrice)
     
@@ -56,7 +56,12 @@ exports.getCartActive = async (req, res) => {
         if (!cartActive) {
             return res.status(404).json({ message: 'cart active not found' })
         }
-
+        let item = cartActive.cart_items
+        let totalPriceFinal = 0;
+        for (let i = 0; i < item.length; i++) {
+            totalPriceFinal += parseInt(item[i].total_price)
+        }
+        cartActive.dataValues.final_price = totalPriceFinal
         return res.status(200).json({ message: "success", data: cartActive })
     } catch (error) {
         return res.status(400).json({ message: `failed ${error.message}`})
