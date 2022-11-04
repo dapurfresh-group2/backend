@@ -35,7 +35,6 @@ exports.checkout = async (req, res) => {
 }
 
 exports.history = async (req, res) => {
-    console.log(req.user)
     try {
         const dataId = req.user.id
         const history = await orderRepository.getHistory(dataId)

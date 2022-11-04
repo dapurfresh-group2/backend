@@ -33,15 +33,17 @@ exports.createOrder = async (
 exports.getHistory = async (
     userID, 
 ) => {
-    console.log(userID)
     const History = await Order.findAll({
         where: {
             UserId: userID,
-            createdAt: {
+            updatedAt: {
                 [Op.lt] :new Date(),
                 [Op.gt] : new Date(new Date() - 7 * 24 * 60 *60 * 1000)
             }
         },
+        order: [
+            ['updatedAt', 'DESC']
+        ],
         include : [
             {
                 model : Cart,
