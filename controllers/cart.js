@@ -36,7 +36,7 @@ exports.postProduct = async (req, res) => {
         } else {
             const checkCartItem = await cartRepository.checkCartItemByProductID(productId, cartActive.id)
             if (checkCartItem) {
-                const updatedCartItem = await cartRepository.updateCartItem(productId, quantity, totalPrice)
+                const updatedCartItem = await cartRepository.updateCartItem(productId, quantity, totalPrice, cartActive.id)
     
                 return res.status(200).json({ message: 'success', data: updatedCartItem })
             }

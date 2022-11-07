@@ -84,10 +84,11 @@ exports.addCartItem = async (productID, cartID, quantity, totalPrice) => {
     return newCartItem
 }
 
-exports.updateCartItem = async (productID, quantity, totalPrice) => {
+exports.updateCartItem = async (productID, quantity, totalPrice, cartID) => {
     const cartItem = await CartItem.findOne({
         where: {
-            productId: productID
+            productId: productID,
+            cartId: cartID
         }
     })
 
