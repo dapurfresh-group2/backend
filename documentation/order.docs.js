@@ -37,10 +37,15 @@ const checkout = {
               description: "address of the buyer",
               example: "Jl. Testing",
             },
-            totalProductPrice: {
+            note: {
               type: "string",
               description: "note from buyer",
               example: "note"
+            },
+            totalProductPrice: {
+              type: "string",
+              description: "note from buyer",
+              example: "insert value based on final price response. ex = 25000"
             },
             shippingPrice: {
               type: "string",
@@ -50,7 +55,7 @@ const checkout = {
             totalPrice: {
               type: "string",
               description: "total cost to pay",
-              example: "insert value based on final price response. ex = 25000"
+              example: "sum final price with shipping price. ex = 30000"
             }
           }
         }
@@ -65,18 +70,18 @@ const checkout = {
           type: "object",
           example: {
             "status": "Proses",
-            "id": 7,
+            "id": 19,
             "UserId": 1,
-            "cartId": 21,
+            "cartId": 52,
             "name": "bob2",
             "phone": "0823000000001",
             "address": "Jl. Testing",
-            "note": null,
-            "total_product_price": "note",
+            "note": "note",
+            "total_product_price": "48400",
             "shipping_price": "5000",
-            "total_price": "29000",
-            "updatedAt": "2022-11-03T14:22:08.891Z",
-            "createdAt": "2022-11-03T14:22:08.891Z"
+            "total_price": "53400",
+            "updatedAt": "2022-11-07T10:44:25.768Z",
+            "createdAt": "2022-11-07T10:44:25.768Z"
           }
         }
       }
@@ -110,7 +115,7 @@ const history = {
               "address": "jakarta",
               "note": "only test",
               "status": "Batal",
-              "total_product_price": "5200",
+              "note": "5200",
               "shipping_price": "1000",
               "total_price": "6200",
               "createdAt": "2022-11-05T08:23:01.915Z",
@@ -172,21 +177,19 @@ const cancelOrder = {
           schema: {
             type: "object",
             example: {
-              "data": {
-                "id": 15,
-                "name": "bob2",
-                "phone": "0823000000001",
-                "address": "Jl. Testing",
-                "note": null,
-                "status": "Batal",
-                "total_product_price": "note",
-                "shipping_price": "5000",
-                "total_price": "57000",
-                "createdAt": "2022-11-07T08:21:31.164Z",
-                "updatedAt": "2022-11-07T08:22:32.484Z",
-                "UserId": 1,
-                "cartId": 39
-              }
+              "id": 19,
+              "name": "bob2",
+              "phone": "0823000000001",
+              "address": "Jl. Testing",
+              "note": "note",
+              "status": "Batal",
+              "total_product_price": "48400",
+              "shipping_price": "5000",
+              "total_price": "53400",
+              "createdAt": "2022-11-07T10:44:25.768Z",
+              "updatedAt": "2022-11-07T10:44:45.362Z",
+              "UserId": 1,
+              "cartId": 52
             }
           }
         }
