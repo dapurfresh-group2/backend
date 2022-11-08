@@ -59,7 +59,7 @@ exports.bestProduct = async (req, res) => {
         });
 
 
-        for (var prop in temp) {
+        for (let prop in temp) {
             id.push({ productId: prop, quantity: temp[prop] });
         }
         id.sort((a, b) => (b.quantity) - (a.quantity));
