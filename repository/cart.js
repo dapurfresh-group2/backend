@@ -119,10 +119,10 @@ exports.getCartStatus = async () => {
         attributes: [],
         include: {
             model: CartItem,
-            attributes: ['productId'],
+            attributes: ['productId', 'quantity'],
         },
         where: {
-            status : 'true'
+            status : 'false'
         },
     })
 
