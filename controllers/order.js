@@ -54,3 +54,18 @@ exports.cancelOrder = async (req, res) => {
         return res.status(400).json({ message: `failed ${error.message}` });
     }
 }
+
+exports.getDetailOrder = async (req, res) => {
+    const orderID = req.params.orderId
+
+    try {
+        const order = await orderRepository.getDetailOrder(orderID, req.user.id)
+        if (!order) {
+            return res.status(404).json({ message: "failed order not found" })
+        }
+
+        return res.status(200).json({ message: "success", data: order })
+    } catch (error) {
+        return res.status(400).json({ message: `failed ${error.message}` });
+    }
+}
