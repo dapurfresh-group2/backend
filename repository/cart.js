@@ -122,7 +122,7 @@ exports.getCartStatus = async () => {
             attributes: ['productId'],
         },
         where: {
-            status : 'true'
+            status : 'false'
         },
     })
 
