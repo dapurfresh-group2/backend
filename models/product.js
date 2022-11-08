@@ -20,6 +20,10 @@ const Product = db.define('products', {
   },
   info: {
     type: DataTypes.STRING
+  },
+  discount: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   }
 });
 
