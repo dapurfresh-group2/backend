@@ -1,6 +1,9 @@
 const Cart = require('../models/cart')
 const CartItem = require('../models/cart-item')
 const Product = require('../models/product')
+const { Sequelize } = require("sequelize");
+const Order = require('../models/order');
+
 
 exports.findCartActive = async (userID) => {
     const cartActive = await Cart.findOne({
@@ -110,3 +113,20 @@ exports.deleteCartItem = async (productID, cartID) => {
 
     return
 }
+
+exports.getCartStatus = async () => {
+    const bestSeller = await Cart.findAll({
+        attributes: [],
+        include: {
+            model: CartItem,
+            attributes: ['productId'],
+        },
+        where: {
+            status : 'true'
+        },
+    })
+
+
+    return bestSeller
+}
+
