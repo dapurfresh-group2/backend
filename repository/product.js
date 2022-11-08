@@ -28,3 +28,12 @@ exports.getAllProductByCategory = async (categoryID) => {
     return products
 
 }
+
+exports.searchProducts = async (productID) => {
+    const search = await Product.findAll({
+        where: {
+            id : productID
+        },
+    })
+    return search
+}

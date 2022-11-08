@@ -1,4 +1,5 @@
 const productRepository = require('../repository/product')
+const cartRepository = require('../repository/cart')
 
 exports.getAllProduct = async (req, res) => {
     try {
@@ -33,3 +34,28 @@ exports.searchProduct = async (req, res) => {
         return res.status(400).json({ message: `failed ${error.message}` });
     };
 };
+
+exports.bestProduct = async (req, res) => {
+    try {
+        let id = []
+        const product = await cartRepository.getCartStatus();
+        function getMax(data, n) {
+            var tmp = {}, tops = [];
+            data.forEach(function(item) {
+                tmp[item] = tmp[item] ? tmp[item]+1 : 1;
+            });
+            tops = Object.keys(tmp).sort(function(a, b) { return tmp[a] - tmp[b] });
+            return tops.slice(-(n)).reverse();
+        }
+        product.map(x => (x.toJSON())).map(y => (y.cart_items).map( z => (id.push(z.productId))))
+        const bestSeller = await productRepository.searchProducts(getMax(id, 5))
+
+        if (bestSeller) {
+            return res.status(200).json({ message: "success", data: bestSeller });
+        } else {
+            return res.status(404).json({ message: "product not found" });
+        }
+    } catch (error) {
+         return res.status(400).json({ message: `failed ${error.message}` });
+    }
+}
