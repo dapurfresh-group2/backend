@@ -41,15 +41,18 @@ exports.searchProduct = async (req, res) => {
 
 exports.bestProduct = async (req, res) => {
     try {
+        let data = []
         let temp_product = [];
         let id = [];
         let temp = {};
         const product = await cartRepository.getCartStatus();
 
+        // create an array of object id and quantity
         product
             .map((x) => x.toJSON())
             .map((y) => y.cart_items.map((z) => temp_product.push(z)));
 
+        // create an object with sum quantity which have same id
         temp_product.forEach(function (x) {
             if (temp.hasOwnProperty(x.productId)) {
                 temp[x.productId] = temp[x.productId] + x.quantity;
@@ -58,19 +61,22 @@ exports.bestProduct = async (req, res) => {
             }
         });
 
-
+        // transform to array
         for (let prop in temp) {
             id.push({ productId: prop, quantity: temp[prop] });
         }
         id.sort((a, b) => (b.quantity) - (a.quantity));
         id.slice(0, 5);
-        id = id.map(a => a.productId);
-
-
-        const bestSeller = await productRepository.searchProducts(id)
-
+        let id_product = id.map(a => a.productId);
+        for (let i in id_product) {
+            let bestSeller = await productRepository.searchProducts(id_product[i])
+            bestSeller = bestSeller[0].dataValues
+            bestSeller.items_sold = id[i].quantity
+            data.push(bestSeller)
+        }
+        data = data.sort(({ items_sold: a }, { items_sold: b }) => b - a);
         if (product) {
-            return res.status(200).json({ message: "success", data: bestSeller });
+            return res.status(200).json({ message: "success", data: data });
         } else {
             return res.status(404).json({ message: "product not found" });
         }
