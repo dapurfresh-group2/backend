@@ -100,11 +100,57 @@ const searchProduct = {
   }
 }
 
+const bestProduct = {
+  tags : ["Product"],
+  security: [
+    {
+      bearerAuth: []
+    }
+  ],
+  summary: "Show best product",
+  description: "This api is used to show the most 5 bought product",
+  responses: {
+    "200": {
+      description: "success",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            example: {
+              "id": 2,
+              "name": "Brokoli",
+              "quantity": 5,
+              "price": "19000",
+              "image": "/static/images/brokoli.png",
+              "weight": "500 gram",
+              "info": null,
+              "discount": 0,
+              "createdAt": "2022-10-13T11:24:16.073Z",
+              "updatedAt": "2022-10-13T11:24:16.073Z",
+              "categoryId": 2,
+              "items_sold": 724
+            }
+          }
+        }
+      }
+    },
+    "404": {
+      description: "product not found"
+    },
+    "400": {
+      description: "bad request"
+    }
+  }
+}
+
 exports.productDoc = {
   "/api/v1/products": {
     get: showAllProducts
   },
   "/api/v1/products/{name}": {
     get: searchProduct
+  },
+  "/api/v1/products/best-products": {
+    get: bestProduct
   }
 }
