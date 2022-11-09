@@ -201,6 +201,87 @@ const cancelOrder = {
   }
 }
 
+const detailOrder = {
+  tags : [ "Order" ],
+  summary: "Show detailed order",
+  security: [
+    {
+      bearerAuth: []
+    }
+  ],
+  description: "This api is used to show the details of the order by the ID",
+  parameters: [
+    {
+      in: "path",
+      name: "orderID",
+      description: "Id of order to see details",
+      example: "18",
+      type: "string"
+    }
+  ],
+  responses: {
+    "200": {
+      description: "success",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            example: {
+              "id": 18,
+              "name": "bob2",
+              "phone": "0823000000001",
+              "address": "Jl. Testing",
+              "note": "note",
+              "status": "Batal",
+              "total_product_price": "38000",
+              "shipping_price": "5000",
+              "total_price": "43000",
+              "createdAt": "2022-11-07T10:42:01.850Z",
+              "updatedAt": "2022-11-07T10:42:30.761Z",
+              "UserId": 1,
+              "cartId": 51,
+              "cart": {
+                "id": 51,
+                "status": false,
+                "createdAt": "2022-11-07T10:40:50.505Z",
+                "updatedAt": "2022-11-07T10:42:02.118Z",
+                "UserId": 1,
+                "cart_items": [
+                  {
+                    "id": 186,
+                    "quantity": 99,
+                    "total_price": "1881000",
+                    "createdAt": "2022-11-07T10:40:50.567Z",
+                    "updatedAt": "2022-11-07T10:50:57.993Z",
+                    "productId": 2,
+                    "cartId": 51,
+                    "product": {
+                      "id": 2,
+                      "name": "Brokoli",
+                      "quantity": 5,
+                      "price": "19000",
+                      "image": "/static/images/brokoli.png",
+                      "weight": "500 gram",
+                      "info": null,
+                      "discount": 0,
+                      "createdAt": "2022-10-13T11:24:16.073Z",
+                      "updatedAt": "2022-10-13T11:24:16.073Z",
+                      "categoryId": 2
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "400": {
+      description: "bad request"
+    }
+  }
+}
+
 exports.orderDoc = {
   "/api/v1/order/checkout/{cartID}": {
     post: checkout
@@ -210,5 +291,8 @@ exports.orderDoc = {
   },
   "/api/v1/order/cancel-order/{orderID}": {
     post: cancelOrder
+  },
+  "/api/v1/order/history/{orderID}": {
+    get: detailOrder
   }
 }
