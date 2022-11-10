@@ -19,11 +19,11 @@ exports.getAllProduct = async (req, res) => {
 
 exports.searchProduct = async (req, res) => {
     try {
-        const productId_input = req.params.productId;
+        const productId_input = req.params.name;
         let filtered_products = [];
         const products = await productRepository.getAllProduct();
         for (let i = 0; i < products.length; i++) {
-            if (products[i].productId.toLowerCase().includes(productId_input.toLowerCase())) {
+            if (products[i].name.toLowerCase().includes(productId_input.toLowerCase())) {
                 filtered_products.push(products[i]);
             }
         }
