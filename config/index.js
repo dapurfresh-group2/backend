@@ -1,6 +1,15 @@
 const { Sequelize } = require('sequelize')
 require('dotenv').config()
+const { DB_NAME, DB_USER, DB_PASS, DB_HOST } = process.env
 
-const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:5432/${process.env.DB_NAME}`)
+// Ini sebenernya gak ada masalah, cuma kalau bisa
+// kalau mau one line seperti ini, tiap value dimasukin
+// ke variabel aja, jadi misal
+// const dbUser = process.env.DB_USER
+// biar lebih readable
+const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
+  host: DB_HOST,
+  dialect: 'postgres'
+});
 
 module.exports = sequelize
